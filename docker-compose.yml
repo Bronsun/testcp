@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: starwars_postgres_dev
+    environment:
+      POSTGRES_DB: starwars_game
+      POSTGRES_USER: starwars_user
+      POSTGRES_PASSWORD: starwars_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - starwars_network
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  starwars_network:
+    driver: bridge
